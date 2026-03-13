@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Video | Mounika Dharani</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #05080f;
+            --surface: #0d1524;
+            --border: #1e2f4a;
+            --accent: #38bdf8;
+            --accent2: #818cf8;
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --font-head: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* ── Grain & Orbs ──────────────────────────────── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+            animation: drift 10s ease-in-out infinite alternate;
+        }
+
+        .orb1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            top: -100px;
+            right: -100px;
+        }
+
+        .orb2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent2);
+            bottom: -50px;
+            left: -50px;
+            animation-delay: -5s;
+        }
+
+        @keyframes drift {
+            from { transform: translate(0, 0); }
+            to { transform: translate(30px, 30px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px; /* Reduced from 1000px */
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: var(--font-head);
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 32px;
+            letter-spacing: -1px;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .video-wrapper {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2px; /* For the gradient border effect */
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.2); /* Default glow */
+            margin-bottom: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 60px rgba(56, 189, 248, 0.25);
+        }
+
+        .video-inner {
+            background: var(--surface);
+            border-radius: 22px;
+            padding: 20px;
+        }
+
+        .video-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent));
+            z-index: 2;
+        }
+
+        video {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            padding: 12px 28px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .accent {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ── Responsive ─────────────────────────────────── */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+            .video-wrapper {
+                padding: 1px;
+                border-radius: 16px;
+            }
+            .video-inner {
+                padding: 12px;
+                border-radius: 14px;
+            }
+            video {
+                border-radius: 10px;
+            }
+            .back-link {
+                padding: 10px 24px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            body {
+                justify-content: flex-start;
+                padding-top: 40px;
+            }
+            .video-wrapper {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="container">
+        <h1>Project <span class="accent">Demonstration</span></h1>
+        
+        <div class="video-wrapper">
+            <div class="video-inner">
+                <video controls autoplay loop title="Project Demonstration Video">
+                    <source src="videos/vedio.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <a href="index.html#projects" class="back-link">
+            ← Back to Portfolio
+        </a>
+    </div>
+</body>
+</html>
